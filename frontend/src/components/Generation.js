@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 
+const DEFAULT_GENERATION = { generationId: '', expiration: ''}
+
 class Generation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      generation: {
-        generationId: 999,
-        expiration: "2020-05-01"
-      }
+      generation: { DEFAULT_GENERATION }
     };
   }
 
+  // Everytime refresh the browser, indicates the generationId
   componentDidMount() {
     fetch("http://localhost:3000/generation")
       .then(response => response.json())
