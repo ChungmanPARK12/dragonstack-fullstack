@@ -12,7 +12,7 @@ class Generation extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3000/generation/next")
+    fetch("http://localhost:3000/generation")
       .then(response => response.json())
       .then(json => {
         this.setState({ generation: json.generation });
