@@ -15,7 +15,6 @@ app.use(cors({ origin:'http://localhost:1234' }));
 app.use('/dragon', dragonRouter);
 app.use('/generation', generationRouter);
 
-
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
 
