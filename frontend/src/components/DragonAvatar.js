@@ -27,7 +27,7 @@ class DragonAvatar extends Component {
         const sizing = { width:200, height:200 };
         return (
             <div className='dragon-avatar-image-wrapper'>
-                <div className='dragon-avatar-image-backgroung' style={{ 
+                <div className='dragon-avatar-image-background' style={{ 
                     backgroundColor,
                     width: sizing.width,
                     height: sizing.height
