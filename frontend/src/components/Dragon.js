@@ -1,44 +1,38 @@
 import React, { Component } from "react";
-import { Button } from 'react-bootstrap';
+import { connect } from "react-redux";
+import { Button } from "react-bootstrap";
 import DragonAvatar from "./DragonAvatar";
-
-const DEFAULT_DRAGON = {
-  dragonId: '',
-  generationId: '',
-  nickname: '',
-  birthdate: '',
-  traits: []
-};
+import { fetchDragon } from "../actions/dragon";
 
 class Dragon extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { dragon: DEFAULT_DRAGON };
+    this.handleNewDragon = this.handleNewDragon.bind(this);
   }
 
   componentDidMount() {
-    this.fetchDragon();
+    //this.props.fetchDragon();
   }
 
-  fetchDragon() {
-    fetch("http://localhost:3000/dragon/new")
-      .then((response) => response.json())
-      .then((json) => {
-        console.log('🐉 /new/dragon response:', json);
-        this.setState({ dragon: json.dragon });
-      })
-      .catch((error) => console.error("error:", error));
+  handleNewDragon() {
+    this.props.fetchDragon();
   }
 
   render() {
     return (
-        <div>
-            <Button onClick={()=> this.fetchDragon()}>New Dragon</Button>
-            <DragonAvatar dragon={this.state.dragon} />
-        </div>
-    ); 
+      <div>
+        <Button onClick={this.handleNewDragon}>New Dragon</Button>
+        <DragonAvatar dragon={this.props.dragon} />
+      </div>
+    );
   }
 }
 
-export default Dragon;
+function mapStateToProps(state) {
+  return {
+    dragon: state.dragon.dragon
+  };
+}
+
+export default connect(mapStateToProps, { fetchDragon: fetchDragon })(Dragon);
