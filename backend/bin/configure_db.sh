@@ -15,6 +15,7 @@ dropdb  -h "$DB_HOST" -U "$DB_USER" --if-exists "$DB_NAME"
 createdb -h "$DB_HOST" -U "$DB_USER" "$DB_NAME"
 
 # 스키마 로드
+psql -h "$DB_HOST" -U "$DB_USER" "$DB_NAME" < ./bin/sql/account.sql
 psql -h "$DB_HOST" -U "$DB_USER" "$DB_NAME" < ./bin/sql/generation.sql
 psql -h "$DB_HOST" -U "$DB_USER" "$DB_NAME" < ./bin/sql/dragon.sql
 psql -h "$DB_HOST" -U "$DB_USER" "$DB_NAME" < ./bin/sql/trait.sql

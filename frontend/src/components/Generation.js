@@ -1,15 +1,15 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchGeneration } from "../actions/generation";
+import fetchStates from "../reducers/fetchStates";
 
-const DEFAULT_GENERATION = { generationId: "", expiration: "" };
-const MINIMUM_DELAY = 3000;
+var MINIMUM_DELAY = 3000;
 
 class Generation extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      generation: DEFAULT_GENERATION,
-    };
-    this.timer = null; // Initialize timer
+    this.timer = null;
+    this.fetchNextGeneration = this.fetchNextGeneration.bind(this);
   }
 
   componentDidMount() {
@@ -22,34 +22,53 @@ class Generation extends Component {
     }
   }
 
-  // Fetch current generation from backend
-  fetchGeneration() {
-    fetch("http://localhost:3000/generation")
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({ generation: json.generation });
-      })
-      .catch((error) => console.error("error:", error));
-  }
-
-  // Schedule next fetch based on expiration
   fetchNextGeneration() {
-    this.fetchGeneration();
+    this.props.fetchGeneration();
 
-    const { generation } = this.state;
-    let delay =
+    var generation = this.props.generation;
+
+    if (!generation || !generation.expiration) {
+      var self = this;
+      this.timer = setTimeout(function () {
+        self.fetchNextGeneration();
+      }, MINIMUM_DELAY);
+      return;
+    }
+
+    var delay =
       new Date(generation.expiration).getTime() - new Date().getTime();
 
-    // Fallback if expiration is not ready or delay is invalid
-    if (!generation.expiration || isNaN(delay) || delay < MINIMUM_DELAY) {
+    if (isNaN(delay) || delay < MINIMUM_DELAY) {
       delay = MINIMUM_DELAY;
     }
 
-    this.timer = setTimeout(() => this.fetchNextGeneration(), delay);
+    var self2 = this;
+    this.timer = setTimeout(function () {
+      self2.fetchNextGeneration();
+    }, delay);
   }
 
   render() {
-    const { generation } = this.state;
+    var generation = this.props.generation;
+    var fetchState = this.props.fetchState;
+    var message = this.props.message;
+
+    if (fetchState === fetchStates.fetching) {
+      return <div>Loading generation...</div>;
+    }
+
+    if (fetchState === fetchStates.error) {
+      return (
+        <div>
+          <h3>Could not load generation</h3>
+          <p>{message}</p>
+        </div>
+      );
+    }
+
+    if (!generation) {
+      return <div>Loading generation...</div>;
+    }
 
     return (
       <div>
@@ -58,6 +77,16 @@ class Generation extends Component {
       </div>
     );
   }
+} 
+
+function mapStateToProps(state) {
+  return {
+    generation: state.generation.generation,
+    fetchState: state.generation.fetchState,
+    message: state.generation.message
+  };
 }
 
-export default Generation;
+export default connect(mapStateToProps, { fetchGeneration: fetchGeneration })(
+  Generation
+);
