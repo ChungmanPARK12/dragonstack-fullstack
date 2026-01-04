@@ -22,7 +22,7 @@ function accountReducer(state, action) {
 
         case ACCOUNT.FETCH_ERROR:
             return {
-                loggedIn: true,
+                loggedIn: false,
                 status: fetchStates.error,
                 message: action.message
             };
@@ -38,7 +38,14 @@ function accountReducer(state, action) {
             return {
                 loggedIn: false,
                 status: fetchStates.success,
-                message: action.message
+                message: action.payload ? action.payload.message : null
+            };
+
+        case ACCOUNT.FETCH_AUTHENTICATED_SUCCESS:
+            return {
+                loggedIn: action.payload.authenticated,
+                status: fetchStates.success,
+                message: null
             };
 
         default:

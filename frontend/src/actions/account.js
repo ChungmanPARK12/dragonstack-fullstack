@@ -34,6 +34,19 @@ export function signup({ username, password }) {
   });
 }
 
+export function login({ username, password }) {
+  return fetchFromAccount({
+    endpoint: "login",
+    options: {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    },
+    SUCCESS_TYPE: ACCOUNT.FETCH_SUCCESS,
+  });
+}
+
 export function logout() {
   return fetchFromAccount({
     endpoint: "logout",
@@ -41,5 +54,15 @@ export function logout() {
       credentials: "include",
     },
     SUCCESS_TYPE: ACCOUNT.FETCH_LOGOUT_SUCCESS,
+  });
+}
+
+export function fetchAuthenticated() {
+  return fetchFromAccount({
+    endpoint: "authenticated",
+    options: {
+      credentials: "include",
+    },
+    SUCCESS_TYPE: ACCOUNT.FETCH_AUTHENTICATED_SUCCESS,
   });
 }
