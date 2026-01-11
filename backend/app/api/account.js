@@ -1,8 +1,10 @@
 const { Router } = require('express');
 const AccountTable = require('../account/table');
 const { hash } = require('../account/helper');
-const { setSession } = require('./helper');
+const { setSession, authenticatedAccount } = require('./helper');
 const Session = require('../account/session');
+const AccountDragonTable = require('../accountDragon/table');
+const { getDragonWithTraits } = require('../dragon/helper');
 
 const router = new Router();
 
@@ -61,27 +63,33 @@ router.get('/logout', (req, res, next) => {
         res.clearCookie('sessionString');
         res.json({ message: 'Successful logout' });
     })
-    .catch(error => next(error));
+        .catch(error => next(error));
 });
 
 router.get('/authenticated', (req, res, next) => {
-    const { sessionString } = req.cookies;
+    authenticatedAccount({ sessionString: req.cookies.sessionString })
+        .then(({ authenticated }) => res.json({ authenticated }))
+        .catch(error => next(error));
+});
 
-    if (!sessionString || !Session.verify(sessionString)) {
-        const error = new Error('Invalid session');
-        error.statusCode = 400;
-        return next(error);
-    } else {
-        const { username, id } = Session.parse(sessionString);
-
-        AccountTable.getAccount({
-            usernameHash: hash(username)
-        }).then(({ account }) => {
-            const authenticated = account.sessionId === id;
-            res.json({ authenticated });
+router.get('/dragons', (req, res, next) => {
+    authenticatedAccount({ sessionString: req.cookies.sessionString })
+        .then(({ account }) => {
+            return AccountDragonTable.getAccountDragons({
+                accountId: account.id
+            });
+        })
+        .then(({ accountDragons }) => {
+            return Promise.all(
+                accountDragons.map(accountDragon => {
+                    return getDragonWithTraits({ dragonId: accountDragon.dragonId });
+                })
+            );
+        })
+        .then(dragons => {
+            res.json({ dragons });
         })
         .catch(error => next(error));
-    }
 });
 
 module.exports = router;

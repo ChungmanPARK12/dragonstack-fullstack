@@ -20,6 +20,7 @@ psql -h "$DB_HOST" -U "$DB_USER" "$DB_NAME" < ./bin/sql/generation.sql
 psql -h "$DB_HOST" -U "$DB_USER" "$DB_NAME" < ./bin/sql/dragon.sql
 psql -h "$DB_HOST" -U "$DB_USER" "$DB_NAME" < ./bin/sql/trait.sql
 psql -h "$DB_HOST" -U "$DB_USER" "$DB_NAME" < ./bin/sql/dragonTrait.sql
+psql -h "$DB_HOST" -U "$DB_USER" "$DB_NAME" < ./bin/sql/accountDragon.sql
 
 # trait 데이터 삽입
 node ./bin/insertTraits.js
