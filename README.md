@@ -1,8 +1,53 @@
-## dragonstack-fullstack
+## 🧱 Tech Stack & What I Learned
 
-This repository contains coursework and practice materials developed while completing a full-stack web development course.
+This project was built while following a full-stack DragonStack course,  
+with a focus on understanding **end-to-end application flow** rather than isolated features.
 
-The project covers core full-stack concepts, including backend development, database integration, and API-based application design.  
-It was created as part of structured learning and hands-on exercises rather than a standalone production application.
+### Frontend
+- **React (Class Components)**
+  - State management with `setState`
+  - Controlled inputs and form handling
+  - Conditional rendering (edit / view modes)
+- **Redux**
+  - Action / Reducer architecture
+  - Async actions with `redux-thunk`
+  - Global state synchronization after API mutations
+- **React Router**
+  - Route-based page structure
+  - Authentication-aware routing
+- **Parcel**
+  - Lightweight bundler for development
 
-The repository is maintained for learning reference and technical review purposes.
+### Backend
+- **Node.js + Express**
+  - RESTful API design
+  - Modular routing structure
+- **Session-based Authentication**
+  - Cookie-based sessions
+  - Server-side session validation
+- **PostgreSQL**
+  - Relational data modeling
+  - Join tables (Account ↔ Dragon)
+- **SQL**
+  - CRUD operations
+  - Foreign key–based relationships
+
+### API Testing & Debugging
+- **Postman**
+  - Manual testing of REST APIs
+  - Verifying request/response payloads
+  - Debugging authentication and session-related issues
+  - Validating backend behavior independently from the frontend
+
+### Full-Stack Integration
+- Frontend ↔ Backend data flow
+- Handling async API calls and UI updates
+- Debugging 500 errors across layers
+- Keeping frontend state in sync after backend updates
+
+---
+
+## 🎯 Key Takeaways
+- Gained hands-on experience debugging real full-stack issues  
+- Learned how small mismatches (naming, payload shape, environment differences) can break an app  
+- Improved confidence in tracing bugs across **React → Redux → API → Database**
