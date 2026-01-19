@@ -49,7 +49,7 @@ const authenticatedAccount = ({ sessionString }) => {
                 usernameHash: hash(username)
             }).then(({ account }) => {
                 const authenticated = account.sessionId === id;
-                resolve({ account, authenticated });
+                resolve({ account, authenticated, username });
             })
                 .catch(error => reject(error));
         }

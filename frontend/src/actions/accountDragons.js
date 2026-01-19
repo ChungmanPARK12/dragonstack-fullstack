@@ -8,4 +8,4 @@ export const fetchAccountDragons = () => fetchFromAccount({
     FETCH_TYPE: ACCOUNT_DRAGONS.FETCH,
     ERROR_TYPE: ACCOUNT_DRAGONS.FETCH_ERROR,
     SUCCESS_TYPE: ACCOUNT_DRAGONS.FETCH_SUCCESS
-})
+});
