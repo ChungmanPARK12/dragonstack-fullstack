@@ -4,7 +4,7 @@ import fetchStates from "./fetchStates";
 
 var DEFAULT_ACCOUNT_DRAGONS = {
   dragons: [],
-  status: fetchStates.success, // 또는 null
+  status: fetchStates.success, 
   message: null
 };
 

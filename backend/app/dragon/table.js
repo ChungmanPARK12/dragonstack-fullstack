@@ -1,3 +1,4 @@
+// backend/app/dragon/table
 const { response } = require('..');
 const pool = require('../../databasePool');
 const DragonTraitTable = require('../dragonTrait/table');

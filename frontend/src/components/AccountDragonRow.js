@@ -1,3 +1,4 @@
+// src/components/AccountDragonRow
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import DragonAvatar from './DragonAvatar';
@@ -53,7 +54,7 @@ class AccountDragonsRow extends Component {
                 if (json.type === 'error') {
                     alert(json.message);
                 } else {
-                    this.toggleEdit(); // edit 모드 종료
+                    this.toggleEdit(); 
                 }
             })
             .catch(error => alert(error.message));
@@ -95,7 +96,7 @@ class AccountDragonsRow extends Component {
                         <input
                             type='checkbox'
                             disabled={!this.state.edit}
-                            value={this.state.isPublic}
+                            checked={this.state.isPublic}
                             onChange={this.updateIsPublic}
                         />
                     </span>

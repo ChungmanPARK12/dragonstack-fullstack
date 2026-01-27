@@ -18,7 +18,7 @@ function publicDragons(state = DEFAULT_PUBLIC_DRAGONS, action) {
 
     case PUBLIC_DRAGONS.FETCH_SUCCESS:
       return {
-        dragons: action.payload.dragons,
+        dragons: action.dragons,
         status: fetchStates.success,
         message: action.message || null
       };

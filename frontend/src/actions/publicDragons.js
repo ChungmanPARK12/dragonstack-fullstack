@@ -12,7 +12,7 @@ export function fetchPublicDragons() {
         if (json.type === 'error') {
           dispatch({ type: PUBLIC_DRAGONS.FETCH_ERROR, message: json.message });
         } else {
-          dispatch({ type: PUBLIC_DRAGONS.FETCH_SUCCESS, dragon: json.dragon });
+          dispatch({ type: PUBLIC_DRAGONS.FETCH_SUCCESS, dragons: json.dragons });
 
         }
     })
